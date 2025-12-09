@@ -35,17 +35,22 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (editId !== null) {
-      const updated = list.map((item) =>
-        item.id === editId ? { ...item, ...employee } : item
-      );
-      setList(updated);
-      setEditId(null);
+    if (!editId) {
+      let newList = [...list, { ...employee, id: Date.now() }];
+      setList(newList);
+      setEmployee({});
     } else {
-      setList([...list, { id: Date.now(), ...employee }]);
-    }
+      let updateList = list.map(value => {
+        if (value.id === editId) {
+          return { ...value, ...employee };
+        }
+        return value;
+      });
 
-    setEmployee({});
+      setList(updateList);
+      setEmployee({});
+      setEditId(null);
+    }
   };
 
   const handleDelete = (id) => {
@@ -58,25 +63,37 @@ const App = () => {
     setEditId(id);
   };
 
-  const filteredList = list.filter((item) => {
-    const s = search.toLowerCase();
+  const handleSearch = (e) => {
+  const value = e.target.value;
+  setSearch(value);
 
-    if (item.ename?.toLowerCase().includes(s)) return item;
-    if (item.department?.toLowerCase().includes(s)) return item;
+  const allData = JSON.parse(localStorage.getItem("list")) || [];
 
-    return false;
+  
+  if (value === "") {
+    setList(allData);
+    return;
+  }
+
+  const newData = allData.filter((item) => {
+    return (
+      item.ename.toLowerCase().includes(value.toLowerCase()) ||
+      item.department.toLowerCase().includes(value.toLowerCase())
+    );
   });
 
-  const indexOfLast = currentPage * itemsPerPage;
-  const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentData = filteredList.slice(indexOfFirst, indexOfLast);
-  const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+  setList(newData);
+};
 
-  const handlePageChange = (page) => setCurrentPage(page);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPage = Math.ceil(list.length / itemsPerPage);
 
   return (
     <>
-      <Header search={search} setSearch={setSearch} />
+      <Header search={search} setSearch={handleSearch} />
 
       <Routes>
         <Route index element={
@@ -89,13 +106,12 @@ const App = () => {
 
         <Route path="/viewdata" element={
           <ViewData
-            list={currentData}
+            list={currentItems}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
             currentPage={currentPage}
-            totalPages={totalPages}
-            handlePageChange={handlePageChange}
-            indexOfFirst={indexOfFirst}
+            totalPage={totalPage}
+            indexOfFirst={indexOfFirstItem}
           />
         } />
       </Routes>

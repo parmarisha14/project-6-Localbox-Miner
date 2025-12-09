@@ -8,7 +8,7 @@ const Page = ({
   currentPage,
   totalPages,
   handlePageChange,
-  indexOfFirst
+  indexOfFirst,
 }) => {
   return (
     <div className="view-container">
@@ -30,7 +30,9 @@ const Page = ({
           <tbody>
             {list.length === 0 ? (
               <tr>
-                <td colSpan="6" className="no-data">No Data Found</td>
+                <td colSpan="6" className="no-data">
+                  No Data Found
+                </td>
               </tr>
             ) : (
               list.map((emp, index) => (
@@ -42,9 +44,18 @@ const Page = ({
                   <td>{emp.salary}</td>
 
                   <td>
-                    <button className="btn-edit" onClick={() => handleEdit(emp.id)}>Edit</button> 
-                    {" "}
-                    <button className="btn-delete" onClick={() => handleDelete(emp.id)}>Delete</button>
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleEdit(emp.id)}
+                    >
+                      Edit
+                    </button>{" "}
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDelete(emp.id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
@@ -66,7 +77,9 @@ const Page = ({
           <button
             key={i}
             onClick={() => handlePageChange(i + 1)}
-            className={currentPage === i + 1 ? "active-page page-btn" : "page-btn"}
+            className={
+              currentPage === i + 1 ? "active-page page-btn" : "page-btn"
+            }
           >
             {i + 1}
           </button>

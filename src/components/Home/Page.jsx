@@ -1,17 +1,14 @@
-import React from 'react'
+import React from "react";
 import "./Page.css";
-const Page = ({employee,handleSubmit,handleChange}) => {
+const Page = ({ employee, handleSubmit, handleChange }) => {
   return (
-    
-      <div className="container my-5 d-flex justify-content-center">
+    <div className="container my-5 d-flex justify-content-center">
       <div className="card shadow-lg custom-card">
-
         <h3 className="text-center mb-4 fw-bold title-text">
           Add Employee Data
         </h3>
 
         <form onSubmit={handleSubmit} className="w-75 mx-auto">
-          
           <div className="mb-3">
             <label className="form-label fw-semibold">Employee Name</label>
             <input
@@ -56,7 +53,6 @@ const Page = ({employee,handleSubmit,handleChange}) => {
               name="salary"
               onChange={handleChange}
               value={employee.salary || ""}
-              
               placeholder="Enter salary"
             />
           </div>
@@ -67,13 +63,10 @@ const Page = ({employee,handleSubmit,handleChange}) => {
           >
             Submit
           </button>
-
         </form>
-
       </div>
     </div>
-   
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

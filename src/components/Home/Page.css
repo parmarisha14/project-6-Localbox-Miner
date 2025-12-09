@@ -22,6 +22,7 @@
 .custom-input:focus {
   border-color: #3c9ea8 !important;
   box-shadow: 0px 0px 6px rgba(60, 158, 168, 0.3);
+  font-size:18px;
 }
 
 .custom-btn {
