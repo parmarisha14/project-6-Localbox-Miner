@@ -1,10 +1,11 @@
 Employee Management System – React CRUD Application
-```
+---
 1. Project Overview
 
 The Employee Management System is a React-based CRUD application designed to manage employee data efficiently. The system allows users to add, view, edit, and delete employee records. It includes search functionality, pagination, and responsive design for improved user experience. Data is stored in the browser’s localStorage, ensuring persistence across sessions.
-```
-```
+
+---
+
 2. Project Objective
 
 The primary objective of this project is to create a lightweight, responsive, and user-friendly web application for managing employee records, providing features like:
@@ -22,8 +23,7 @@ Pagination for easy navigation
 Continuous numbering across pages
 
 This project can serve as a foundation for integrating with backend APIs in future versions.
-```
-```
+---
 3. Technology Stack
 Technology	Purpose
 ReactJS	Frontend library for building UI components
@@ -31,8 +31,7 @@ React Router DOM	Client-side routing
 LocalStorage	Data persistence in the browser
 CSS / Bootstrap	Styling and responsiveness
 
-```
-```
+---
 4. Features
 
 Add Employee: Fill a form to add a new employee with Name, Email, Department, and Salary.
@@ -48,7 +47,7 @@ Pagination: View employee data with 5 records per page and continuous numbering.
 Responsive Design: Works on desktop, tablet, and mobile devices.
 
 Deployment Ready: Hosted on Vercel with proper SPA routing.
-```
+
 ```
 5. Folder & Component Structure
 day16-react-router-dom-crud/
@@ -72,6 +71,7 @@ day16-react-router-dom-crud/
 ├── vercel.json                     // SPA routing for deployment
 └── README.md
 ```
+---
 6. Components Description
 6.1 Header
 
@@ -100,16 +100,25 @@ Continuous numbering using (indexOfFirst + index + 1)
 Edit/Delete buttons for each record
 
 Pagination controls with Prev / Next and page numbers
-
+---
 7. State Management
+   
 State	Purpose
+
 employee	Holds current form data for add/edit
+
 list	Stores all employee records
+
 editId	Tracks employee being edited
+
 search	Holds current search query
+
 currentPage	Tracks the current page for pagination
+
 itemsPerPage	Number of records per page
+
 indexOfFirst / indexOfLast	Determines slice of data for current page
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
