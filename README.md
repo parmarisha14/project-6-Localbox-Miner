@@ -30,7 +30,7 @@ Pagination with continuous numbering and Prev/Next buttons
 Responsive and clean UI using custom CSS and Bootstrap
 
 Routing using React Router DOM (/ for home, /viewdata for list)
----
+```
 
 3. Folder Structure
 project-6-Localbox-Miner
