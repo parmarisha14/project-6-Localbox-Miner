@@ -1,0 +1,21 @@
+.custom-nav {
+  background: #e9f4f7;
+  padding: 12px 0;
+}
+
+.nav-title {
+  color: #2d6a7a !important;
+  font-size: 24px;
+}
+
+.nav-text {
+  color: #3b7d8b !important;
+  font-weight: 500;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.nav-text:hover {
+  color: #2d6a7a !important;
+}
