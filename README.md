@@ -51,7 +51,7 @@ project-6-Localbox-Miner
 │   ├── App.jsx
 │   └── index.js
 ├── package.json
-
+```
 
 ---
 4. Component Explanation
