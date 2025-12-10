@@ -8,23 +8,24 @@ const App = () => {
 
   const [employee, setEmployee] = useState({});
   const [list, setList] = useState([]);
+  const [data, setData] = useState([]);
   const [editId, setEditId] = useState(null);
   const [mount, setMount] = useState(false);
 
-  const [search, setSearch] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("list")) || [];
-    setList(data);
+    const stored = JSON.parse(localStorage.getItem("list")) || [];
+    setList(stored);
+    setData(stored);       
     setMount(true);
   }, []);
 
   useEffect(() => {
     if (mount) {
       localStorage.setItem("list", JSON.stringify(list));
+      setData(list);       
     }
   }, [list, mount]);
 
@@ -38,62 +39,48 @@ const App = () => {
     if (!editId) {
       let newList = [...list, { ...employee, id: Date.now() }];
       setList(newList);
-      setEmployee({});
     } else {
-      let updateList = list.map(value => {
-        if (value.id === editId) {
-          return { ...value, ...employee };
-        }
-        return value;
-      });
-
+      let updateList = list.map(value =>
+        value.id === editId ? { ...value, ...employee } : value
+      );
       setList(updateList);
-      setEmployee({});
       setEditId(null);
     }
+
+    setEmployee({});
   };
 
   const handleDelete = (id) => {
-    setList(list.filter((item) => item.id !== id));
+    const updated = list.filter((item) => item.id !== id);
+    setList(updated);
   };
 
   const handleEdit = (id) => {
-    const data = list.find((item) => item.id === id);
-    setEmployee(data);
+    const item = list.find((x) => x.id === id);
+    setEmployee(item);
     setEditId(id);
   };
 
   const handleSearch = (e) => {
-  const value = e.target.value;
-  setSearch(value);
+    const value = e.target.value.toLowerCase();
 
-  const allData = JSON.parse(localStorage.getItem("list")) || [];
-
-  
-  if (value === "") {
-    setList(allData);
-    return;
-  }
-
-  const newData = allData.filter((item) => {
-    return (
-      item.ename.toLowerCase().includes(value.toLowerCase()) ||
-      item.department.toLowerCase().includes(value.toLowerCase())
+    let newData = list.filter(item =>
+      item.ename.toLowerCase().includes(value) ||
+      item.department.toLowerCase().includes(value)
     );
-  });
 
-  setList(newData);
-};
+    setData(newData.length ? newData : list);
+  };
 
-
+ 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPage = Math.ceil(list.length / itemsPerPage);
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPage = Math.ceil(data.length / itemsPerPage);
 
   return (
     <>
-      <Header search={search} setSearch={handleSearch} />
+      <Header handleSearch={handleSearch} />
 
       <Routes>
         <Route index element={
@@ -106,12 +93,13 @@ const App = () => {
 
         <Route path="/viewdata" element={
           <ViewData
-            list={currentItems}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
-            currentPage={currentPage}
-            totalPage={totalPage}
-            indexOfFirst={indexOfFirstItem}
+            list={list}
+            currentItems={currentItems}
+              currentPage={currentPage}
+              totalPage={totalPage}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              setCurrentPage={setCurrentPage}
           />
         } />
       </Routes>

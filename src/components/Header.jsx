@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-const Header = ({ search, setSearch }) => {
+const Header = ({ handleSearch}) => {
   return (
     <nav className="navbar custom-nav">
       <div className="container d-flex justify-content-between align-items-center">
@@ -16,8 +16,8 @@ const Header = ({ search, setSearch }) => {
             type="text"
             className="form-control"
             placeholder="Search Name or Department"
-            value={search}
-            onChange={setSearch}
+            
+            onChange={handleSearch}
             style={{ width: "250px", marginLeft: "20px" }}
           />
         </div>

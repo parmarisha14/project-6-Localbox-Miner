@@ -5,10 +5,10 @@ const Page = ({
   list,
   handleDelete,
   handleEdit,
+  currentItems,
   currentPage,
-  totalPages,
-  handlePageChange,
-  indexOfFirst,
+  totalPage,
+  setCurrentPage
 }) => {
   return (
     <div className="view-container">
@@ -35,9 +35,9 @@ const Page = ({
                 </td>
               </tr>
             ) : (
-              list.map((emp, index) => (
+              currentItems.map((emp, index) => (
                 <tr key={emp.id}>
-                  <td>{indexOfFirst + index + 1}</td>
+                  <td>{index + 1 + (currentPage - 1) * 4}</td>
                   <td>{emp.ename}</td>
                   <td>{emp.email}</td>
                   <td>{emp.department}</td>
@@ -64,35 +64,49 @@ const Page = ({
         </table>
       </div>
 
-      <div className="pagination">
-        <button
-          className="page-btn"
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          Prev
-        </button>
+      {/* Pagination */}
+      <ul className="pagination justify-content-center">
 
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            key={i}
-            onClick={() => handlePageChange(i + 1)}
-            className={
-              currentPage === i + 1 ? "active-page page-btn" : "page-btn"
-            }
+        {/* Prev Button */}
+        {currentPage > 1 && (
+          <li className="page-item">
+            <button
+              className="page-link"
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Prev
+            </button>
+          </li>
+        )}
+
+        {/* Page Numbers */}
+        {[...Array(totalPage)].map((_, index) => (
+          <li
+            key={index}
+            className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
           >
-            {i + 1}
-          </button>
+            <button
+              className="page-link"
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          </li>
         ))}
 
-        <button
-          className="page-btn"
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          Next
-        </button>
-      </div>
+        {/* Next Button */}
+        {currentPage < totalPage && (
+          <li className="page-item">
+            <button
+              className="page-link"
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              Next
+            </button>
+          </li>
+        )}
+
+      </ul>
     </div>
   );
 };
